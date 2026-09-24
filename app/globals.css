@@ -2,25 +2,63 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --foreground: #4d2e2eb0;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Inter', sans-serif;
+  background-color: #2B7A4B;
+}
+
+/* ===== HIDE SCROLLBAR ===== */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ===== CHART ANIMATIONS ===== */
+@keyframes growBar {
+  from { height: 0; }
+  to { height: var(--height); }
+}
+.bar-animate {
+  animation: growBar 1s ease-out forwards;
+}
+
+/* ===== DONUT CHART ===== */
+.donut-chart {
+  background: conic-gradient(
+    #2B7A4B 0% 60%,    /* Delivered */
+    #F59E0B 60% 70%,   /* Shipped */
+    #3B82F6 70% 85%,   /* Processing */
+    #9CA3AF 85% 95%,   /* Cancelled */
+    #EF4444 95% 100%   /* Returned */
+  );
+}
+
+
+/* ===== GLOBAL SCROLLBAR HIDE ===== */
+/* Chrome, Safari, Edge, Opera */
+::-webkit-scrollbar {
+  display: none;
+  width: 0px;
+  background: transparent;
+}
+
+/* Firefox, IE, Edge */
+* {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+/* Also hide inside specific containers if needed */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }

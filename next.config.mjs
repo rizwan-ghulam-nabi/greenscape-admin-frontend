@@ -1,6 +1,17 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  /* config options here */
+     images: {
+    remotePatterns: [
+      { protocol: 'https', hostname: 'images.unsplash.com', pathname: '/**' },
+      { protocol: 'https', hostname: 'res.cloudinary.com', pathname: '/**' },
+      { protocol: 'https', hostname: 'placehold.co', pathname: '/**' },
+      { protocol: 'https', hostname: 'replicate.delivery', pathname: '/**' },
+      { protocol: 'https', hostname: '**.replicate.delivery', pathname: '/**' },
+    ],
+  },
 };
 
 export default nextConfig;
+
+
+
