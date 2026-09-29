@@ -13,7 +13,7 @@ import {
   Star, FileText, Image as ImageIcon, BarChart3, FolderOpen, Layers
 } from 'lucide-react';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001/api/admin';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export default function AllUsersPage() {
   const router = useRouter();

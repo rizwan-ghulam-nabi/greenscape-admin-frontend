@@ -12,7 +12,7 @@ import {
   ChevronDown, Download, Printer, Edit
 } from 'lucide-react';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001/api/admin';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export default function CustomerProfilePage() {
   const router = useRouter();

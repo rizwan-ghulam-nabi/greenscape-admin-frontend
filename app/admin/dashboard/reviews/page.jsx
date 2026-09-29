@@ -10,7 +10,7 @@ import {
   Leaf, User, Box, RefreshCw, AlertCircle, X, Plus, MessageSquare, Send
 } from 'lucide-react';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001/api/admin';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export default function ReviewsPage() {
   const [loading, setLoading] = useState(true);

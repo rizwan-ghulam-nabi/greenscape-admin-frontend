@@ -74,7 +74,7 @@ export default function Home() {
 
   const handleLogout = async () => {
     try {
-      await fetch('http://localhost:5001/api/admin/logout', {
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/logout`, {
         method: 'POST',
         credentials: 'include',
       });

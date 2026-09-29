@@ -11,7 +11,7 @@
 //   ChevronDown, ChevronRight, Loader2, Wand2
 // } from 'lucide-react';
 
-// const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001/api/admin';
+// const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
 // // ============================================================
 // // 🎨 BANNER TEMPLATES
@@ -1156,7 +1156,7 @@ import {
   ChevronRight, Loader2, Wand2, Move, Tag
 } from 'lucide-react';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001/api/admin';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
 // ============================================================
 // 🎨 BANNER TEMPLATES (button now uses x/y %)

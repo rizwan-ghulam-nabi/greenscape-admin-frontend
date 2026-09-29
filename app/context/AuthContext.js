@@ -13,7 +13,7 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const response = await fetch('http://localhost:5001/api/admin/me', {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/me`, {
           method: 'GET',
           credentials: 'include', // ✅ Automatically sends httpOnly cookie
         });
@@ -46,7 +46,7 @@ export function AuthProvider({ children }) {
 
   const login = async (email, password) => {
     try {
-      const response = await fetch('http://localhost:5001/api/admin/login', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
@@ -79,7 +79,7 @@ export function AuthProvider({ children }) {
 
   const logout = async () => {
     try {
-      await fetch('http://localhost:5001/api/admin/logout', {
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/logout`, {
         method: 'POST',
         credentials: 'include', // ✅ Clears httpOnly cookie
       });

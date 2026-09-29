@@ -13,7 +13,7 @@
 // // without duplicating the path.
 // // ==========================================
 // const RAW_API_URL =
-//   process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001/api/admin';
+//   process.env.NEXT_PUBLIC_API_URL;
 
 // const API_BASE_URL = RAW_API_URL
 //   .replace(/\/api\/admin\/?$/, '')
@@ -450,9 +450,14 @@ import {
 // ✅ FIX: env var already contains `/api/admin`
 // Strip it here so we can safely append `/api/admin/chat/...`
 // without duplicating the path.
+//
+// ✅ FIX #2: localhost fallback ONLY in development.
+// In production, if env var is missing, we fail loudly
+// instead of silently calling localhost.
 // ==========================================
 const RAW_API_URL =
-  process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001/api/admin';
+  process.env.NEXT_PUBLIC_API_URL ||
+  (process.env.NODE_ENV === 'development' ? 'http://localhost:5001/api/admin' : '');
 
 // ---- DEBUG LOGS (remove these later) ----
 if (typeof window !== 'undefined') {

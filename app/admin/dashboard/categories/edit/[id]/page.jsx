@@ -7,7 +7,7 @@ import axios from 'axios';
 import { ArrowLeft, Loader2 } from 'lucide-react';
 import CategoryForm from '../../_components/CategoryForm';
 
-const API_BASE_URL = 'http://localhost:5001/api/admin';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export default function EditCategoryPage() {
   const { id } = useParams();

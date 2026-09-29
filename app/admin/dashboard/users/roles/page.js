@@ -12,7 +12,7 @@ import {
   AlertCircle, Loader2, Crown, X, Save, Trash2, User, CheckCircle2, Circle
 } from 'lucide-react';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001/api/admin';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export default function RolesPermissionsPage() {
   const router = useRouter();

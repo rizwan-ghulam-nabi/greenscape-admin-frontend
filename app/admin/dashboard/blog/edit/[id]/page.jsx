@@ -11,7 +11,7 @@ import {
   Trash2, Calendar, Clock, Eye as EyeIcon
 } from 'lucide-react';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001/api/admin';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export default function EditBlogPostPage() {
   const router = useRouter();

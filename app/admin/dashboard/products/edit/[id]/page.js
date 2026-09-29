@@ -10,7 +10,7 @@ import {
   X, Check, Edit, UploadCloud, Loader2, ChevronDown
 } from 'lucide-react';
 
-const API_BASE_URL = 'http://localhost:5001/api/admin';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export default function EditProductPage({ params }) {
   const router = useRouter();
