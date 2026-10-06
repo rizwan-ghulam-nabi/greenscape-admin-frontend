@@ -1507,78 +1507,82 @@ export default function CreateBannerPage() {
   // SUBMIT
   // ============================================================
   const handleSubmit = async (e) => {
-    e?.preventDefault?.();
-    setError(''); setSuccess(''); setLoading(true);
+  e?.preventDefault?.();
+  setError(''); setSuccess(''); setLoading(true);
 
-    if (!formData.title || !formData.image) {
-      setError('Please fill in Title and upload an Image.');
-      setLoading(false); return;
+  if (!formData.title || !formData.image) {
+    setError('Please fill in Title and upload an Image.');
+    setLoading(false); return;
+  }
+
+  try {
+    const submissionData = {
+      title: formData.title,
+      bannerType: formData.bannerType,
+      linkType: formData.linkType,
+      categoryId: formData.linkType === 'Category' ? formData.categoryId : null,
+      productId: formData.linkType === 'Product' ? formData.productId : null,
+      customUrl: formData.linkType === 'Custom URL' ? formData.customUrl : null,
+      image: formData.image,
+      order: Number(formData.order) || 1,
+      isActive: formData.isActive,
+
+      // ✅ Convert local datetime-local string → ISO UTC (or null if empty)
+      startDate: formData.startDate ? new Date(formData.startDate).toISOString() : null,
+      endDate: formData.endDate ? new Date(formData.endDate).toISOString() : null,
+
+      button: {
+        text: formData.button.text || 'Shop Now',
+        x: Number(formData.button.x) || 50,
+        y: Number(formData.button.y) || 50,
+        width: Number(formData.button.width) || 160,
+        height: Number(formData.button.height) || 48,
+        size: formData.button.size,
+        style: formData.button.style,
+        bgColor: formData.button.bgColor,
+        textColor: formData.button.textColor,
+        hoverBgColor: formData.button.hoverBgColor,
+        borderRadius: formData.button.borderRadius,
+        showArrow: formData.button.showArrow,
+      },
+
+      // ✅ Always send badge object (never null) so values persist
+      badge: {
+        enabled: formData.badge.enabled,
+        text: formData.badge.text,
+        x: Number(formData.badge.x) || 82,
+        y: Number(formData.badge.y) || 22,
+        bgColor: formData.badge.bgColor,
+        textColor: formData.badge.textColor,
+        shape: formData.badge.shape,
+        fontSize: Number(formData.badge.fontSize) || 14,
+        paddingX: Number(formData.badge.paddingX) || 14,
+        paddingY: Number(formData.badge.paddingY) || 6,
+      },
+
+      overlayType: formData.overlayType,
+      overlayOpacity: Number(formData.overlayOpacity) || 0,
+      showOnDesktop: formData.showOnDesktop,
+      showOnTablet: formData.showOnTablet,
+      showOnMobile: formData.showOnMobile,
+      showOnPages: formData.showOnPages,
+      marginTop: Number(formData.marginTop) || 0,
+      marginBottom: Number(formData.marginBottom) || 0,
+      animation: formData.animation,
+      animationDuration: Number(formData.animationDuration) || 800,
+      altText: formData.altText,
+    };
+
+    const res = await axios.post(`${API_BASE_URL}/banners`, submissionData, { withCredentials: true });
+    if (res.status === 201 || res.status === 200) {
+      setSuccess('Banner created successfully! 🎉');
+      setTimeout(() => router.push('/admin/dashboard/banners'), 1500);
     }
-
-    try {
-      const submissionData = {
-        title: formData.title,
-        bannerType: formData.bannerType,
-        linkType: formData.linkType,
-        categoryId: formData.linkType === 'Category' ? formData.categoryId : null,
-        productId: formData.linkType === 'Product' ? formData.productId : null,
-        customUrl: formData.linkType === 'Custom URL' ? formData.customUrl : null,
-        image: formData.image,
-        order: formData.order,
-        isActive: formData.isActive,
-        startDate: formData.startDate || null,
-        endDate: formData.endDate || null,
-
-        button: {
-          text: formData.button.text || 'Shop Now',
-          x: formData.button.x,
-          y: formData.button.y,
-          width: formData.button.width,
-          height: formData.button.height,
-          size: formData.button.size,
-          style: formData.button.style,
-          bgColor: formData.button.bgColor,
-          textColor: formData.button.textColor,
-          hoverBgColor: formData.button.hoverBgColor,
-          borderRadius: formData.button.borderRadius,
-          showArrow: formData.button.showArrow,
-        },
-
-        badge: formData.badge.enabled ? {
-          text: formData.badge.text,
-          x: formData.badge.x,
-          y: formData.badge.y,
-          bgColor: formData.badge.bgColor,
-          textColor: formData.badge.textColor,
-          shape: formData.badge.shape,
-          fontSize: formData.badge.fontSize,
-          paddingX: formData.badge.paddingX,
-          paddingY: formData.badge.paddingY,
-        } : null,
-
-        overlayType: formData.overlayType,
-        overlayOpacity: formData.overlayOpacity,
-        showOnDesktop: formData.showOnDesktop,
-        showOnTablet: formData.showOnTablet,
-        showOnMobile: formData.showOnMobile,
-        showOnPages: formData.showOnPages,
-        marginTop: formData.marginTop,
-        marginBottom: formData.marginBottom,
-        animation: formData.animation,
-        animationDuration: formData.animationDuration,
-        altText: formData.altText,
-      };
-
-      const res = await axios.post(`${API_BASE_URL}/banners`, submissionData, { withCredentials: true });
-      if (res.status === 201 || res.status === 200) {
-        setSuccess('Banner created successfully! 🎉');
-        setTimeout(() => router.push('/admin/dashboard/banners'), 1500);
-      }
-    } catch (err) {
-      if (err.response?.status === 401 || err.response?.status === 403) router.push('/admin/login');
-      else { setError(err.response?.data?.error || 'Failed to create banner.'); setLoading(false); }
-    }
-  };
+  } catch (err) {
+    if (err.response?.status === 401 || err.response?.status === 403) router.push('/admin/login');
+    else { setError(err.response?.data?.error || 'Failed to create banner.'); setLoading(false); }
+  }
+};
 
   const getPreviewWrapperStyles = () => {
     switch (previewDevice) {
