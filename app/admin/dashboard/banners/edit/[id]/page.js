@@ -555,13 +555,21 @@ export default function EditBannerPage() {
   // ============================================================
   // HELPERS
   // ============================================================
+  // const getPreviewWrapperStyles = () => {
+  //   switch (previewDevice) {
+  //     case 'mobile': return 'max-w-[375px] aspect-[9/16]';
+  //     case 'tablet': return 'max-w-[768px] aspect-[4/3]';
+  //     default: return 'max-w-full aspect-[2.5/1]';
+  //   }
+  // };
+
   const getPreviewWrapperStyles = () => {
-    switch (previewDevice) {
-      case 'mobile': return 'max-w-[375px] aspect-[9/16]';
-      case 'tablet': return 'max-w-[768px] aspect-[4/3]';
-      default: return 'max-w-full aspect-[2.5/1]';
-    }
-  };
+  switch (previewDevice) {
+    case 'mobile': return 'max-w-[375px] aspect-[9/16]';
+    case 'tablet': return 'max-w-[768px] aspect-[4/3]';
+    default: return 'max-w-full aspect-[3.25/1]';   // ✅ matches app
+  }
+};
 
   const filteredTemplates = templateFilter === 'All'
     ? BANNER_TEMPLATES
