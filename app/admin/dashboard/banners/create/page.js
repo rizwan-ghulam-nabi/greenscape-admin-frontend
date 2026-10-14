@@ -1227,7 +1227,7 @@ export default function CreateBannerPage() {
   const [templateFilter, setTemplateFilter] = useState('All');
 
   const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
-  const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET;
+  const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET_BANNER;
 
   // ============================================================
   // ✅ FORM STATE (added imageOriginal)
