@@ -8,9 +8,10 @@ import {
   LayoutDashboard, ShoppingBag, Package, FolderOpen, Users, 
   Box, Ticket, Star, FileText, Image as ImageIcon, BarChart3, 
   Shield, Settings, LogOut, ChevronRight, X, User, Menu,
-  Layers , Percent  // ✅ ADDED: Import Layers icon for Collections
+  Layers , Percent,Briefcase  // ✅ ADDED: Import Layers icon for Collections
 } from 'lucide-react';
 import { useAuth } from '@/app/context/AuthContext';
+
 
 export default function AdminSidebar({ isOpen, setIsOpen, isMobile, isTablet }) {
   const pathname = usePathname();
@@ -34,11 +35,58 @@ export default function AdminSidebar({ isOpen, setIsOpen, isMobile, isTablet }) 
   const navigationLinks = [
     { name: 'Dashboard', href: '/admin/dashboard', icon: LayoutDashboard },
     
+    {
+         name: 'Applications',
+          href: '/admin/dashboard/careers',
+          icon: Briefcase,
+    },
+
+     { 
+      name: 'Blog Posts', 
+      icon: FileText, 
+      hasSubmenu: true,
+      submenu: [
+        { name: 'All Posts', href: '/admin/dashboard/blog' },
+        { name: 'Create Post', href: '/admin/dashboard/blog/create' },
+      ]
+    },
+    { 
+      name: 'Banners', 
+      icon: ImageIcon, 
+      hasSubmenu: true,
+      submenu: [
+        { name: 'All Banners', href: '/admin/dashboard/banners' },
+        { name: 'Create Banner', href: '/admin/dashboard/banners/create' },
+      ]
+    },
+
+     { 
+      name: 'Categories', 
+      icon: FolderOpen, 
+      hasSubmenu: true,
+      submenu: [
+        { name: 'All Categories', href: '/admin/dashboard/categories' },
+        { name: 'Add New', href: '/admin/dashboard/categories/create' },
+      ]
+    },
+    { // ✅ ADDED: Collections Menu
+      name: 'Collections', 
+      icon: Layers, 
+      hasSubmenu: true,
+      submenu: [
+        { name: 'All Collections', href: '/admin/dashboard/collections' },
+        { name: 'Create Collection', href: '/admin/dashboard/collections/create' },
+      ]
+    },
+    { name: 'Customers', href: '/admin/dashboard/customers', icon: Users },
+    
     { 
   name: 'Discounts', 
   href: '/admin/dashboard/discounts', 
   icon: Percent 
 },
+
+ { name: 'Inventory', href: '/admin/dashboard/inventory', icon: Box },
 
     { 
       name: 'Orders', 
@@ -63,56 +111,13 @@ export default function AdminSidebar({ isOpen, setIsOpen, isMobile, isTablet }) 
         { name: 'Add New', href: '/admin/dashboard/products/create' },
       ]
     },
-    { 
-      name: 'Categories', 
-      icon: FolderOpen, 
-      hasSubmenu: true,
-      submenu: [
-        { name: 'All Categories', href: '/admin/dashboard/categories' },
-        { name: 'Add New', href: '/admin/dashboard/categories/create' },
-      ]
-    },
-    { // ✅ ADDED: Collections Menu
-      name: 'Collections', 
-      icon: Layers, 
-      hasSubmenu: true,
-      submenu: [
-        { name: 'All Collections', href: '/admin/dashboard/collections' },
-        { name: 'Create Collection', href: '/admin/dashboard/collections/create' },
-      ]
-    },
-    { name: 'Customers', href: '/admin/dashboard/customers', icon: Users },
-    { name: 'Inventory', href: '/admin/dashboard/inventory', icon: Box },
+   
+   
     { name: 'Reviews', href: '/admin/dashboard/reviews', icon: Star },
-    { 
-      name: 'Blog Posts', 
-      icon: FileText, 
-      hasSubmenu: true,
-      submenu: [
-        { name: 'All Posts', href: '/admin/dashboard/blog' },
-        { name: 'Create Post', href: '/admin/dashboard/blog/create' },
-      ]
-    },
-    { 
-      name: 'Banners', 
-      icon: ImageIcon, 
-      hasSubmenu: true,
-      submenu: [
-        { name: 'All Banners', href: '/admin/dashboard/banners' },
-        { name: 'Create Banner', href: '/admin/dashboard/banners/create' },
-      ]
-    },
+   
     { name: 'Reports', href: '/admin/dashboard/reports', icon: BarChart3 },
-    { 
-      name: 'Users & Roles', 
-      icon: Shield, 
-      hasSubmenu: true,
-      submenu: [
-        { name: 'All Users', href: '/admin/dashboard/users' },
-        { name: 'Roles & Permissions', href: '/admin/dashboard/users/roles' }
-      ]
-    },
-    { 
+
+     { 
       name: 'Settings', 
       icon: Settings, 
       hasSubmenu: true,
@@ -122,6 +127,20 @@ export default function AdminSidebar({ isOpen, setIsOpen, isMobile, isTablet }) 
         { name: 'Shipping', href: '/admin/dashboard/settings/shipping' }
       ]
     },
+
+    { 
+      name: 'Users & Roles', 
+      icon: Shield, 
+      hasSubmenu: true,
+      submenu: [
+        { name: 'All Users', href: '/admin/dashboard/users' },
+        { name: 'Roles & Permissions', href: '/admin/dashboard/users/roles' }
+      ]
+    },
+   
+
+
+
   ];
 
   // Close sidebar on mobile/tablet when clicking a link
