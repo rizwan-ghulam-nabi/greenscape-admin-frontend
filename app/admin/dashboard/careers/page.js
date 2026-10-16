@@ -9,8 +9,7 @@ import {
   MapPin, Globe, FileText, ChevronLeft, ChevronRight, AlertCircle,
 } from 'lucide-react';
 
-// ✅ FIX: Use env var directly — the /proxy-api/admin rewrite handles routing
-// (matches how every other admin page works: login, /me, chatbot, etc.)
+// ✅ Keep the base URL exactly as it is (which is /proxy-api/admin)
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || '';
 
 const STATUS_STYLES = {
@@ -47,8 +46,10 @@ export default function AdminCareersPage() {
   const fetchApplications = useCallback(async () => {
     try {
       setLoading(true);
-      // ✅ FIX: dropped the extra /api prefix
-      const res = await axios.get(`${API_BASE_URL}/careers/applications`, {
+      // ✅ FIX: Added /admin back into the path. 
+      // This becomes: /proxy-api/admin/admin/careers/applications
+      // Rewrite translates to: /api/admin/admin/careers/applications
+      const res = await axios.get(`${API_BASE_URL}/admin/careers/applications`, {
         params: {
           status: filter,
           search: debouncedSearch,
@@ -76,9 +77,8 @@ export default function AdminCareersPage() {
   const handleStatusChange = async (id, status) => {
     try {
       setUpdatingStatus(true);
-      // ✅ FIX: dropped the extra /api prefix
       await axios.put(
-        `${API_BASE_URL}/careers/applications/${id}/status`,
+        `${API_BASE_URL}/admin/careers/applications/${id}/status`,
         { status },
         { withCredentials: true }
       );
@@ -95,8 +95,7 @@ export default function AdminCareersPage() {
   const handleDelete = async () => {
     try {
       setDeleting(true);
-      // ✅ FIX: dropped the extra /api prefix
-      await axios.delete(`${API_BASE_URL}/careers/applications/${deleteId}`, {
+      await axios.delete(`${API_BASE_URL}/admin/careers/applications/${deleteId}`, {
         withCredentials: true,
       });
       setApplications((prev) => prev.filter((a) => a._id !== deleteId));
