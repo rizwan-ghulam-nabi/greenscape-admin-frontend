@@ -9,17 +9,9 @@ import {
   MapPin, Globe, FileText, ChevronLeft, ChevronRight, AlertCircle,
 } from 'lucide-react';
 
-// ✅ FIX: NEXT_PUBLIC_API_URL is "http://localhost:5001/api/admin"
-// Strip the /api/admin suffix so we can build clean /api/... paths
-const RAW_API_URL = process.env.NEXT_PUBLIC_API_URL || '';
-const API_BASE_URL = RAW_API_URL
-  .replace(/\/api\/admin\/?$/, '')  // strip /api/admin
-  .replace(/\/api\/?$/, '')         // strip /api if no /admin
-  .replace(/\/$/, '');              // strip trailing slash
-
-// Now:
-// RAW_API_URL  = http://localhost:5001/api/admin
-// API_BASE_URL = http://localhost:5001
+// ✅ FIX: Use env var directly — the /proxy-api/admin rewrite handles routing
+// (matches how every other admin page works: login, /me, chatbot, etc.)
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || '';
 
 const STATUS_STYLES = {
   new:         { bg: 'bg-blue-100 text-blue-700 border-blue-200',       label: 'New' },
@@ -55,7 +47,8 @@ export default function AdminCareersPage() {
   const fetchApplications = useCallback(async () => {
     try {
       setLoading(true);
-      const res = await axios.get(`${API_BASE_URL}/api/careers/applications`, {
+      // ✅ FIX: dropped the extra /api prefix
+      const res = await axios.get(`${API_BASE_URL}/careers/applications`, {
         params: {
           status: filter,
           search: debouncedSearch,
@@ -83,8 +76,9 @@ export default function AdminCareersPage() {
   const handleStatusChange = async (id, status) => {
     try {
       setUpdatingStatus(true);
+      // ✅ FIX: dropped the extra /api prefix
       await axios.put(
-        `${API_BASE_URL}/api/careers/applications/${id}/status`,
+        `${API_BASE_URL}/careers/applications/${id}/status`,
         { status },
         { withCredentials: true }
       );
@@ -101,7 +95,8 @@ export default function AdminCareersPage() {
   const handleDelete = async () => {
     try {
       setDeleting(true);
-      await axios.delete(`${API_BASE_URL}/api/careers/applications/${deleteId}`, {
+      // ✅ FIX: dropped the extra /api prefix
+      await axios.delete(`${API_BASE_URL}/careers/applications/${deleteId}`, {
         withCredentials: true,
       });
       setApplications((prev) => prev.filter((a) => a._id !== deleteId));
