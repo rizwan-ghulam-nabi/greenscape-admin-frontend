@@ -9,8 +9,10 @@ import {
   MapPin, Globe, FileText, ChevronLeft, ChevronRight, AlertCircle,
 } from 'lucide-react';
 
-// ✅ Keep the base URL exactly as it is (which is /proxy-api/admin)
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || '';
+// ✅ FIX: Strip '/admin' so the proxy sends it to the public /api/careers route
+// Env var is /proxy-api/admin -> becomes /proxy-api
+const RAW_API_URL = process.env.NEXT_PUBLIC_API_URL || '';
+const API_BASE_URL = RAW_API_URL.replace(/\/admin\/?$/, '');
 
 const STATUS_STYLES = {
   new:         { bg: 'bg-blue-100 text-blue-700 border-blue-200',       label: 'New' },
@@ -46,17 +48,14 @@ export default function AdminCareersPage() {
   const fetchApplications = useCallback(async () => {
     try {
       setLoading(true);
-      // ✅ FIX: Added /admin back into the path. 
-      // This becomes: /proxy-api/admin/admin/careers/applications
-      // Rewrite translates to: /api/admin/admin/careers/applications
-      const res = await axios.get(`${API_BASE_URL}/admin/careers/applications`, {
+      const res = await axios.get(`${API_BASE_URL}/careers/applications`, {
         params: {
           status: filter,
           search: debouncedSearch,
           page: currentPage,
           limit: 15,
         },
-        withCredentials: true,
+        withCredentials: true, // ✅ Sends adminToken cookie for adminAuth
       });
 
       setApplications(res.data.applications || []);
@@ -78,7 +77,7 @@ export default function AdminCareersPage() {
     try {
       setUpdatingStatus(true);
       await axios.put(
-        `${API_BASE_URL}/admin/careers/applications/${id}/status`,
+        `${API_BASE_URL}/careers/applications/${id}/status`,
         { status },
         { withCredentials: true }
       );
@@ -95,7 +94,7 @@ export default function AdminCareersPage() {
   const handleDelete = async () => {
     try {
       setDeleting(true);
-      await axios.delete(`${API_BASE_URL}/admin/careers/applications/${deleteId}`, {
+      await axios.delete(`${API_BASE_URL}/careers/applications/${deleteId}`, {
         withCredentials: true,
       });
       setApplications((prev) => prev.filter((a) => a._id !== deleteId));
